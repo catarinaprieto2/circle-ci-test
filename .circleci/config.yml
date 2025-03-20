@@ -6,8 +6,16 @@ jobs:
       - image: cimg/node:14.10.1
     steps: 
       - checkout
+
+      - restore_cache:
+          key: c1-dependencies-{{ checksum "packege.json" }}
+
       - run: 
           command: npm install
+      - save_cache: 
+          key: c1-dependencies-{{ checksum "packege.json" }}
+          paths:
+            - node_modules
       - run: 
           command: npm test
           
